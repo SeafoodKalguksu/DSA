@@ -29,3 +29,7 @@ def main():
     print(my_machine.get_max())
     my_machine.remove_number(2)
     print(my_machine.get_max())
+
+if __name__ == "__main__":
+    main()
+    
