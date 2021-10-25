@@ -2,6 +2,17 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 
+'''
+Input sample
+3
+1 0
+2 1
+3 0
+
+Output sample
+3 1 2
+'''
+
 from typing import List
 
 
