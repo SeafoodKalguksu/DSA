@@ -18,22 +18,19 @@ from typing import List
 
 class Pipe:
     def __init__(self) -> None:
-        self.numbers: List[int] = []
+        self.data: List[int] = []
 
     def add_left(self, number: int) -> None:
-        # O(n): self.numbers[0] + self.numbers[1] + ... + self.numbers[n]
-        #         = [number] + self.numbers[0] + ... + self.numbers[n-1]
-        self.numbers = [number] + self.numbers
+        # O(n): self.data[0] + self.data[1] + ... + self.data[n]
+        #         = [number] + self.data[0] + ... + self.data[n-1]
+        self.data = [number] + self.data
 
     def add_right(self, number: int) -> None:
-        # O(1): self.numbers[0] + ... + self.numbers[n-1] + number
-        self.numbers.append(number)
-
-    def get_numbers(self) -> List[int]:
-        return self.numbers
+        # O(1): self.data[0] + ... + self.data[n-1] + number
+        self.data.append(number)
 
 
-def insert_number(my_input: List[List[int]], my_pipe: Pipe) -> None:
+def insert_number(my_input: List[List[int]], pipe: Pipe) -> None:
     print(f'my_input = {my_input}')
 
     for item in enumerate(my_input):
@@ -42,10 +39,10 @@ def insert_number(my_input: List[List[int]], my_pipe: Pipe) -> None:
         print(f'item = {item}')
 
         if item[1][1]:
-            my_pipe.add_right(item[1][0])
+            pipe.add_right(item[1][0])
             print(f'add_right, item[1][0] = {item[1][0]}')
         else:
-            my_pipe.add_left(item[1][0])
+            pipe.add_left(item[1][0])
             print(f'add_left, item[1][0] = {item[1][0]}')
 
 def using_list() -> None:
@@ -58,7 +55,7 @@ def using_list() -> None:
     # print(*insert_number(my_input))
     pipe = Pipe()
     insert_number(my_input, pipe)
-    print(f'numbers = {pipe.get_numbers()}')
+    print(f'numbers = {pipe.data}')
 
 
 def main() -> None:

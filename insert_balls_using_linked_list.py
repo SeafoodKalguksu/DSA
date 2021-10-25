@@ -18,7 +18,7 @@ from typing import List
 
 class Node:
     def __init__(self) -> None:
-        self.number: int = None
+        self.data: int = None
         self.next: Node = None
 
 class SinglyLinkedList:
@@ -46,7 +46,7 @@ def get_numbers(sll: SinglyLinkedList) -> List[int]:
     numbers: List[int] = []
 
     while node:
-        numbers.append(node.number)
+        numbers.append(node.data)
         node = node.next
 
     return numbers
@@ -54,7 +54,7 @@ def get_numbers(sll: SinglyLinkedList) -> List[int]:
 def insert_numbers(my_input: List[List[int]], sll: SinglyLinkedList) -> Node:
     for item in enumerate(my_input):
         node = Node()
-        node.number = item[1][0]
+        node.data = item[1][0]
 
         if item[1][1]:
             # add_right
