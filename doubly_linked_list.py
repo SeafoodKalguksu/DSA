@@ -16,30 +16,37 @@ class DoublyLinkedList:
         self.tail: Node = None
 
     def append(self, data: int) -> None:
-        node = Node()
-        node.data = data
+        new_node = Node()
+        new_node.data = data
 
         if self.head:
-            self.tail.next_node = node
-            node.prev_node = self.tail
-            self.tail = node
+            self.tail.next_node = new_node
+            new_node.prev_node = self.tail
+            self.tail = new_node
         else:
-            self.head = self.tail = node
+            self.head = self.tail = new_node
 
     def insert(self, pos: int, data: int) -> None:
-        node = Node()
-        node.data = data
+        new_node = Node()
+        new_node.data = data
         next_node = self.get_node_by_pos(pos)
 
         if next_node:
             if next_node == self.head:
-                node.next_node = self.head
-                self.head.prev_node = node
-                self.head = node
+                new_node.next_node = self.head
+                self.head.prev_node = new_node
+                self.head = new_node
+            elif next_node == self.tail:
+                self.tail.prev_node.next_node = new_node
+                new_node.prev_node = self.tail.prev_node
+                new_node.next_node = self.tail
+                self.tail.prev_node = new_node
             else:
-                next_node.prev_node.next_node = node
-                node.next_node = next_node
-                next_node.prev_node = node
+                next_node.prev_node.next_node = new_node
+                new_node.prev_node = next_node.prev_node
+                new_node.next_node = next_node
+                next_node.prev_node = new_node
+
         else:
             print(f'the pos is invalid in the list: pos = {pos}')
 
