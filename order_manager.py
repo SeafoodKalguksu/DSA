@@ -4,7 +4,7 @@
 
 from typing import List
 
-class OrderSystem:
+class OrderManager:
     def __init__(self) -> None:
         self.data: List[int] = []
 
@@ -25,7 +25,7 @@ class OrderSystem:
 
 
 def main():
-    order_system = OrderSystem()
+    order_system = OrderManager()
 
     order_system.place_order(2)
     order_system.remove_order(2)
