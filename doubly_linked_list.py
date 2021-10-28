@@ -46,7 +46,6 @@ class DoublyLinkedList:
                 new_node.prev_node = next_node.prev_node
                 new_node.next_node = next_node
                 next_node.prev_node = new_node
-
         else:
             print(f'the pos is invalid in the list: pos = {pos}')
 
@@ -69,24 +68,19 @@ class DoublyLinkedList:
             if self.head == self.tail:
                 node.data = None
                 self.head = self.tail = None
-                return
-
-            if node == self.head:
+            elif node == self.head:
                 self.head.next_node.prev_node = None
                 self.head = self.head.next_node
                 node.data = node.next_node = None
-                return
-
-            if node == self.tail:
+            elif node == self.tail:
                 self.tail.prev_node.next_node = None
+                self.tail = self.tail.prev_node
                 node.data = node.prev_node = None
-                return
-
-            # head <-> ... node ... <--> tail
-            node.prev_node.next_node = node.next_node
-            node.next_node.prev_node = node.prev_node
-            node.data = node.prev_node = node.next_node = None
-            return
+            else:
+                # head <-> ... node ... <--> tail
+                node.prev_node.next_node = node.next_node
+                node.next_node.prev_node = node.prev_node
+                node.data = node.prev_node = node.next_node = None
         else:
             print("can't remove the data")
 
@@ -118,6 +112,16 @@ def main() -> None:
     lst.insert(0, 1) # head
     lst.insert(2, 3)
     lst.insert(4, 5)
+    lst.get_length()
+    print(f'lst.get_node_by_pos(5) = {lst.get_node_by_pos(5).data}')
+
+    lst.remove(2)
+    lst.remove(6)
+    lst.remove(1)
+    lst.remove(3)
+    lst.remove(5)
+    lst.remove(4)
+    print(f'lst.head = {lst.head}, lst.tail = {lst.tail}')
 
 
 if __name__ == "__main__":
