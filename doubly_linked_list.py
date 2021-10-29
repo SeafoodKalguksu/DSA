@@ -64,25 +64,28 @@ class DoublyLinkedList:
         node = self.find(data)
 
         if node:
-            # only 1 node in the list
-            if self.head == self.tail:
-                node.data = None
-                self.head = self.tail = None
-            elif node == self.head:
-                self.head.next_node.prev_node = None
-                self.head = self.head.next_node
-                node.data = node.next_node = None
-            elif node == self.tail:
-                self.tail.prev_node.next_node = None
-                self.tail = self.tail.prev_node
-                node.data = node.prev_node = None
-            else:
-                # head <-> ... node ... <--> tail
-                node.prev_node.next_node = node.next_node
-                node.next_node.prev_node = node.prev_node
-                node.data = node.prev_node = node.next_node = None
+            self.remove(node)
         else:
             print("can't remove the data")
+
+    def remove_node(self, node: Node) -> None:
+        # only 1 node in the list
+        if self.head == self.tail:
+            node.data = None
+            self.head = self.tail = None
+        elif node == self.head:
+            self.head.next_node.prev_node = None
+            self.head = self.head.next_node
+            node.data = node.next_node = None
+        elif node == self.tail:
+            self.tail.prev_node.next_node = None
+            self.tail = self.tail.prev_node
+            node.data = node.prev_node = None
+        else:
+            # head <-> ... node ... <--> tail
+            node.prev_node.next_node = node.next_node
+            node.next_node.prev_node = node.prev_node
+            node.data = node.prev_node = node.next_node = None
 
     # return the number of the nodes in the list
     def get_length(self) -> int:
