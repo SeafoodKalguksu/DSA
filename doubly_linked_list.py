@@ -64,7 +64,7 @@ class DoublyLinkedList:
         node = self.find(data)
 
         if node:
-            self.remove(node)
+            self.remove_node(node)
         else:
             print("can't remove the data")
 
