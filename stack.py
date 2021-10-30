@@ -1,0 +1,58 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+
+from typing import List
+
+class Stack:
+    def __init__(self) -> None:
+        self.data: List[int] = []
+        self.max = 10
+
+    def is_full(self) -> bool:
+        return True if len(self.data) == self.max else False
+
+    def is_empty(self) -> bool:
+        return True if len(self.data) == 0 else False
+
+    def push(self, data: int) -> None:
+        if not self.is_full():
+            self.data.append(data)
+        else:
+            print("can't push because the stack is full!")
+
+    def pop(self) -> None:
+        if not self.is_empty():
+            self.data.pop()
+        else:
+            print("can't pop because the stack is empty!")
+    
+
+def main() -> None:
+    my_stack = Stack()
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(1)
+    my_stack.push(2)
+
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+    my_stack.pop()
+
+if __name__ == "__main__":
+    main()
