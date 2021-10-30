@@ -4,13 +4,14 @@
 
 from typing import List
 
+MAX_STACK_SIZE = 10
 class Stack:
-    def __init__(self) -> None:
+    def __init__(self, max_size: int) -> None:
         self.data: List[int] = []
-        self.max = 10
+        self.max_size = max_size
 
     def is_full(self) -> bool:
-        return True if len(self.data) == self.max else False
+        return True if len(self.data) == self.max_size else False
 
     def is_empty(self) -> bool:
         return True if len(self.data) == 0 else False
@@ -29,7 +30,7 @@ class Stack:
     
 
 def main() -> None:
-    my_stack = Stack()
+    my_stack = Stack(MAX_STACK_SIZE)
     my_stack.push(1)
     my_stack.push(1)
     my_stack.push(1)
