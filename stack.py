@@ -10,22 +10,25 @@ class Stack:
     def __init__(self, max_size: int) -> None:
         self.items: List[int] = []
         self.max_size = max_size
+        self.top = 0
 
     def is_full(self) -> bool:
-        return True if len(self.items) == self.max_size else False
+        return True if self.top == self.max_size else False
 
     def is_empty(self) -> bool:
-        return True if len(self.items) == 0 else False
+        return True if self.top == 0 else False
 
     def push(self, item: int) -> None:
         if not self.is_full():
             self.items.append(item)
+            self.top += 1
         else:
             print("can't push because the stack is full!")
 
     def pop(self) -> None:
         if not self.is_empty():
             self.items.pop()
+            self.top -= 1
         else:
             print("can't pop because the stack is empty!")
 
