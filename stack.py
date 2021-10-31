@@ -29,6 +29,7 @@ class Stack:
             return self.items.pop()
         else:
             print("can't pop because the stack is empty!")
+            return None
 
 
 def test_samples() -> None:
@@ -40,12 +41,12 @@ def test_samples() -> None:
     my_stack.push(5)
     my_stack.push(6)
 
-    my_stack.pop()
-    my_stack.pop()
-    my_stack.pop()
-    my_stack.pop()
-    my_stack.pop()
-    my_stack.pop()
+    print(f'my_stack.pop() = {my_stack.pop()}')
+    print(f'my_stack.pop() = {my_stack.pop()}')
+    print(f'my_stack.pop() = {my_stack.pop()}')
+    print(f'my_stack.pop() = {my_stack.pop()}')
+    print(f'my_stack.pop() = {my_stack.pop()}')
+    print(f'my_stack.pop() = {my_stack.pop()}')
 
 
 def main() -> None:
