@@ -19,7 +19,7 @@ class DoublyLinkedList:
     def find(self, item: Any) -> Node:
         node = self.__head
 
-        while node:
+        while node is not None:
             if node.item == item:
                 return node
             node = node.next_node
