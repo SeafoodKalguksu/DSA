@@ -12,18 +12,12 @@ class Node:
 
 class DoublyLinkedList:
     def __init__(self) -> None:
-        self.head: Node = None
-        self.tail: Node = None
-        self.size: int = 0
-
-    def increase_size(self) -> None:
-        self.size += 1
-
-    def decrease_size(self) -> None:
-        self.size -= 1
+        self.__head: Node = None
+        self.__tail: Node = None
+        self.__size: int = 0
 
     def find(self, item: Any) -> Node:
-        node = self.head
+        node = self.__head
 
         while node:
             if node.item == item:
@@ -34,11 +28,11 @@ class DoublyLinkedList:
         return None
 
     def find_by_pos(self, pos: int) -> Node:
-        if pos < 0 or pos >= self.size:
+        if pos < 0 or pos >= self.__size:
             print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
 
-        node = self.head
+        node = self.__head
         for _ in range(pos):
             if node:
                 node = node.next_node
@@ -49,14 +43,14 @@ class DoublyLinkedList:
         new_node = Node()
         new_node.item = item
 
-        if self.head:
-            self.tail.next_node = new_node
-            new_node.prev_node = self.tail
-            self.tail = new_node
+        if self.__head:
+            self.__tail.next_node = new_node
+            new_node.prev_node = self.__tail
+            self.__tail = new_node
         else:
-            self.head = self.tail = new_node
+            self.__head = self.__tail = new_node
 
-        self.increase_size()
+        self.__size += 1
 
     def insert(self, pos: int, item: Any) -> None:
         new_node = Node()
@@ -64,22 +58,22 @@ class DoublyLinkedList:
         next_node = self.find_by_pos(pos)
 
         if next_node:
-            if next_node == self.head:
-                new_node.next_node = self.head
-                self.head.prev_node = new_node
-                self.head = new_node
-            elif next_node == self.tail:
-                self.tail.prev_node.next_node = new_node
-                new_node.prev_node = self.tail.prev_node
-                new_node.next_node = self.tail
-                self.tail.prev_node = new_node
+            if next_node == self.__head:
+                new_node.next_node = self.__head
+                self.__head.prev_node = new_node
+                self.__head = new_node
+            elif next_node == self.__tail:
+                self.__tail.prev_node.next_node = new_node
+                new_node.prev_node = self.__tail.prev_node
+                new_node.next_node = self.__tail
+                self.__tail.prev_node = new_node
             else:
                 next_node.prev_node.next_node = new_node
                 new_node.prev_node = next_node.prev_node
                 new_node.next_node = next_node
                 next_node.prev_node = new_node
 
-            self.increase_size()
+            self.__size += 1
         else:
             print(f"can't insert because the pos is invalid in the list: pos = {pos}")
 
@@ -88,22 +82,22 @@ class DoublyLinkedList:
 
         if node:
             self.remove_node(node)
-            self.decrease_size()
+            self.__size -= 1
         else:
             print("can't remove the item because the item is not in the list.")
 
     def remove_node(self, node: Node) -> None:
         # only 1 node in the list
-        if self.head == self.tail:
+        if self.__head == self.__tail:
             node.item = None
-            self.head = self.tail = None
-        elif node == self.head:
-            self.head.next_node.prev_node = None
-            self.head = self.head.next_node
+            self.__head = self.__tail = None
+        elif node == self.__head:
+            self.__head.next_node.prev_node = None
+            self.__head = self.__head.next_node
             node.item = node.next_node = None
-        elif node == self.tail:
-            self.tail.prev_node.next_node = None
-            self.tail = self.tail.prev_node
+        elif node == self.__tail:
+            self.__tail.prev_node.next_node = None
+            self.__tail = self.__tail.prev_node
             node.item = node.prev_node = None
         else:
             # head <-> ... node ... <--> tail
