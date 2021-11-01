@@ -14,54 +14,26 @@ Output sample
 '''
 
 from typing import List
-
-
-class Node:
-    def __init__(self) -> None:
-        self.data: int = None
-        self.next: Node = None
-
-class SinglyLinkedList:
-    def __init__(self) -> None:
-        self.head: Node = None
-        self.tail: Node = None
-
-    def add_left(self, node: Node):
-        if self.head:
-            node.next = self.head
-            self.head = node
-        else:
-            self.head = self.tail = node
-
-    def add_right(self, node: Node):
-        if self.head:
-            self.tail.next = node
-            self.tail = node
-        else:
-            self.head = self.tail = node
-
+from singly_linked_list import SinglyLinkedList
 
 def get_numbers(sll: SinglyLinkedList) -> List[int]:
-    node = sll.head
+    node = sll.find_by_pos(0)
     numbers: List[int] = []
 
     while node:
-        numbers.append(node.data)
-        node = node.next
+        numbers.append(node.item)
+        node = node.next_node
 
     return numbers
 
-def insert_numbers(my_input: List[List[int]], sll: SinglyLinkedList) -> Node:
+def insert_numbers(my_input: List[List[int]], sll: SinglyLinkedList) -> None:
     for item in enumerate(my_input):
-        node = Node()
-        node.data = item[1][0]
-
         if item[1][1]:
             # add_right
-            sll.add_right(node)
+            sll.append(item[1][0])
         else:
             # add left
-            sll.add_left(node)
+            sll.add_to_head(item[1][0])
 
 def using_singly_linked_list() -> None:
     counter:int = int(input())
