@@ -6,27 +6,27 @@ from typing import List, Any
 
 class Stack:
     def __init__(self, max_size: int) -> None:
-        self.items: List[Any] = []
-        self.max_size = max_size
-        self.top: int = 0
+        self.__items: List[Any] = []
+        self.__max_size = max_size
+        self.__top: int = 0
 
     def is_full(self) -> bool:
-        return True if self.top == self.max_size else False
+        return True if self.__top == self.__max_size else False
 
     def is_empty(self) -> bool:
-        return True if self.top == 0 else False
+        return True if self.__top == 0 else False
 
     def push(self, item: Any) -> None:
         if not self.is_full():
-            self.items.append(item)
-            self.top += 1
+            self.__items.append(item)
+            self.__top += 1
         else:
             print("can't push because the stack is full!")
 
     def pop(self) -> Any:
         if not self.is_empty():
-            self.top -= 1
-            return self.items.pop()
+            self.__top -= 1
+            return self.__items.pop()
         else:
             print("can't pop because the stack is empty!")
             return None
