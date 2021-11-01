@@ -4,19 +4,19 @@
 
 from typing import Any
 
-class Node:
+class NodeForSLL: # Node for Singly Linked List
     def __init__(self) -> None:
         self.item: Any = None
-        self.next_node: Node = None
+        self.next_node: NodeForSLL = None
 
 
 class SinglyLinkedList:
     def __init__(self) -> None:
-        self.__head: Node = None
-        self.__tail: Node = None
+        self.__head: NodeForSLL = None
+        self.__tail: NodeForSLL = None
         self.__size: int = 0
 
-    def find(self, item: Any) -> Node:
+    def find(self, item: Any) -> NodeForSLL:
         node = self.__head
 
         while node is not None:
@@ -27,7 +27,7 @@ class SinglyLinkedList:
         print("can't find a node with the item in the list.")
         return None
 
-    def find_by_pos(self, pos: int) -> Node:
+    def find_by_pos(self, pos: int) -> NodeForSLL:
         if pos < 0 or pos >= self.__size:
             print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
@@ -40,7 +40,7 @@ class SinglyLinkedList:
         return node
 
     def add_to_head(self, item: Any):
-        node = Node()
+        node = NodeForSLL()
         node.item = item
 
         if self.__head:
@@ -52,7 +52,7 @@ class SinglyLinkedList:
         self.__size += 1
 
     def append(self, item: Any):
-        node = Node()
+        node = NodeForSLL()
         node.item = item
 
         if self.__head:
@@ -70,7 +70,7 @@ class SinglyLinkedList:
             elif pos == self.__size - 1:
                 self.append(item)
             else:
-                node = Node()
+                node = NodeForSLL()
                 node.item = item
                 prev_node = self.find_by_pos(pos - 1)
 
