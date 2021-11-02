@@ -120,7 +120,11 @@ class SinglyLinkedList:
 
         self.__size += 1
 
-    def pop(self, pos: int) -> Any:
+    # def pop(self, pos: int) -> Any:
+    def pop(self, pos:int = None) -> Any:
+        if pos is None:
+            pos = self.get_size() - 1
+
         if pos < 0 or pos >= self.__size:
             print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
@@ -146,7 +150,13 @@ class SinglyLinkedList:
 
 
 def main() -> None:
-    pass
+    sll = SinglyLinkedList()
+    sll.append(1)
+    sll.append(2)
+    sll.append(3)
+    sll.append(4)
+    print(f"sll.pop() = {sll.pop()}")
+    print(f"sll.pop(1) = {sll.pop(1)}")
 
 
 if __name__ == "__main__":
