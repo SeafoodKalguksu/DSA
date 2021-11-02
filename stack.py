@@ -18,6 +18,9 @@ class Stack:
     def empty(self) -> bool:
         return True if self.__top == 0 else False
 
+    def peek(self) -> Any:
+        return self.__items.get_head()
+
     def push(self, item: Any) -> None:
         if not self.full():
             self.__items.append(item)
@@ -35,7 +38,8 @@ class Stack:
 
 
 def test_samples() -> None:
-    my_stack = Stack(5)
+    max_size = int(input('type your maximum size for the stack: '))
+    my_stack = Stack(max_size)
     my_stack.push(1)
     my_stack.push(2)
     my_stack.push(3)
