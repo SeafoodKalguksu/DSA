@@ -30,6 +30,20 @@ class SinglyLinkedList:
         print("can't find a node with the item in the list.")
         return None
 
+    def find_prev_node(self, cur_node: Node) -> Node:
+        if cur_node is None:
+            print("can't remove because the cur_node is None!")
+            return None
+
+        prev_node = None
+        node = self.__head
+
+        while cur_node is not node:
+            prev_node = node
+            node = node.next_node
+
+        return prev_node
+
     def find_by_pos(self, pos: int) -> Node:
         if pos < 0 or pos >= self.__size:
             print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
@@ -85,42 +99,30 @@ class SinglyLinkedList:
             print("can't insert because of the invalid pos.")
 
     def remove(self, item: Any) -> None:
-        prev_node = None
-        cur_node = self.__head
+        node = self.find(item)
 
-        # The list is empty
-        if self.__head is None:
-            print("can't remove because the list is empty.")
-            return None
-
-        # Found the item in the first node of the list.
-        if item == self.__head.item:
-            self.__head = self.__head.next_node
-            cur_node.item = None
-            cur_node.next_node = None
+        if node is not None:
+            prev_node = self.find_prev_node(node)
+            self.__remove_node(node, prev_node)
         else:
-            node = self.find(item)
-            if node is None:
-                print("can't remove because a node with the item is not int the list.")
-                return None
+            print("can't remove because the node is None!")
 
-            while cur_node is not node:
-                prev_node = cur_node
-                cur_node = cur_node.next_node
+    def __remove_node(self, node: Node, prev_node: Node) -> None:
+        if self.__head == node: # Found the item in the first node of the list.
+            self.__head = self.__head.next_node
+            node.item = None
+            node.next_node = None
+        elif node is self.__tail: # Found the item in the last node of the list.
+            prev_node.next_node = None
+            self.__tail.item = None
+            self.__tail = prev_node
+        else:
+            prev_node.next_node = node.next_node
+            node.item = None
+            node.next_node = None
 
-            # Found the item in the last node of the list.
-            if cur_node is self.__tail:
-                prev_node.next_node = None
-                self.__tail.item = None
-                self.__tail = prev_node
-            else:
-                prev_node.next_node = cur_node.next_node
-                cur_node.item = None
-                cur_node.next_node = None
+        self.__size -= 1
 
-        self.__size += 1
-
-    # def pop(self, pos: int) -> Any:
     def pop(self, pos:int = None) -> Any:
         if pos is None:
             pos = self.get_size() - 1
@@ -129,22 +131,10 @@ class SinglyLinkedList:
             print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
 
-        cur_node = self.find_by_pos(pos)
+        node = self.find_by_pos(pos)
         prev_node = self.find_by_pos(pos -1)
-        item = cur_node.item
-
-        if cur_node is self.__head:
-            self.__head.item = None
-            self.__head.next_node = None
-            self.__head = cur_node.next_node
-        elif cur_node is self.__tail:
-            cur_node.item = None
-            prev_node.next_node = None
-            self.__tail = prev_node
-        else:
-            prev_node.next_node = cur_node.next_node
-            cur_node.item = None
-            cur_node.next_node = None
+        item = node.item
+        self.__remove_node(node, prev_node)
 
         return item
 
@@ -155,8 +145,11 @@ def main() -> None:
     sll.append(2)
     sll.append(3)
     sll.append(4)
-    print(f"sll.pop() = {sll.pop()}")
-    print(f"sll.pop(1) = {sll.pop(1)}")
+    sll.append(5)
+    print(f"sll.pop() = {sll.pop(1)}")
+    print(f"sll.pop(1) = {sll.pop()}")
+    print(f"sll.remove(3) = {sll.remove(3)}")
+    print(f"sll.remove(2) = {sll.remove(2)}")
 
 
 if __name__ == "__main__":
