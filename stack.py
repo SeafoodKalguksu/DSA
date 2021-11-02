@@ -4,27 +4,30 @@
 
 from typing import List, Any
 
+from singly_linked_list import SinglyLinkedList
+
 class Stack:
     def __init__(self, max_size: int) -> None:
-        self.__items: List[Any] = []
+        # self.__items: List[Any] = []
+        self.__items = SinglyLinkedList()
         self.__max_size = max_size
         self.__top: int = 0
 
-    def is_full(self) -> bool:
+    def full(self) -> bool:
         return True if self.__top == self.__max_size else False
 
-    def is_empty(self) -> bool:
+    def empty(self) -> bool:
         return True if self.__top == 0 else False
 
     def push(self, item: Any) -> None:
-        if not self.is_full():
+        if not self.full():
             self.__items.append(item)
             self.__top += 1
         else:
             print("can't push because the stack is full!")
 
     def pop(self) -> Any:
-        if not self.is_empty():
+        if not self.empty():
             self.__top -= 1
             return self.__items.pop()
         else:
