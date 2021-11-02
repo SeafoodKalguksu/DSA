@@ -2,13 +2,12 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 
-from typing import List, Any
+from typing import Any
 
 from singly_linked_list import SinglyLinkedList
 
 class Stack:
     def __init__(self, max_size: int) -> None:
-        # self.__items: List[Any] = []
         self.__items = SinglyLinkedList()
         self.__max_size = max_size
         self.__top: int = 0
