@@ -105,6 +105,20 @@ class DoublyLinkedList:
             node.next_node.prev_node = node.prev_node
             node.item = node.prev_node = node.next_node = None
 
+    def pop(self, pos:int = None) -> Any:
+        if pos is None:
+            item = self.__tail.item
+            self.remove_node(self.__tail)
+            return item
+
+        if pos < 0 or pos >= self.__size:
+            print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
+            return None
+
+        node = self.find_by_pos(pos - 1)
+        item = node.item
+        self.remove_node(node)
+
 
 def main() -> None:
     lst = DoublyLinkedList()
@@ -112,9 +126,11 @@ def main() -> None:
     lst.append(4)
     lst.append(6)
     lst.insert(0, 1) # head
-    lst.insert(6, 3)
-    lst.insert(4, 5)
+    lst.insert(2, 3)
+    lst.insert(1, 5)
 
+    print(f"lst.pop() = {lst.pop()}")
+    print(f"lst.pop() = {lst.pop()}")
     lst.remove(2)
     lst.remove(6)
     lst.remove(1)
