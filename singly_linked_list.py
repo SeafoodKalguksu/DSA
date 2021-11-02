@@ -16,6 +16,9 @@ class SinglyLinkedList:
         self.__tail: Node = None
         self.__size: int = 0
 
+    def get_size(self) -> int:
+        return self.__size
+
     def find(self, item: Any) -> Node:
         node = self.__head
 
