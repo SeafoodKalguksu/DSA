@@ -133,6 +133,9 @@ class SinglyLinkedList:
 
         node = self.find_by_pos(pos)
         prev_node = self.find_by_pos(pos -1)
+        if prev_node is None:
+            print("prev_node is None and only one node exists in the list!")
+
         item = node.item
         self.__remove_node(node, prev_node)
 
