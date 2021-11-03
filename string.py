@@ -20,3 +20,7 @@ print(f"working_days = {working_days}")
 # Convert a string to a list.
 name = list(NAME)
 print(f"name = {name}")
+
+# Convert a list to a string.
+NEW_NAME = ''.join(name)
+print(f"NEW_NAME = {NEW_NAME}")
