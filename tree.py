@@ -29,23 +29,22 @@ class Tree:
 
         # Discover the subtree in the tree.
         def discover(node, tree) -> Tree:
-            if tree is not None:
-                result = tree.find_subtree(node, tree)
+            result = tree and tree.find_subtree(node, tree)
 
-                if result is not None:
-                    # 'result' does not have its any childs.
-                    if result.left_subtree is None and result.right_subtree is None:
-                        return result
-                    else:
-                        print("found the result with the node but the result has its childs.")
-                        return None
+            if result is not None:
+                # 'result' does not have its any childs.
+                if result.left_subtree is None and result.right_subtree is None:
+                    return result
+                else:
+                    print("found the result with the node but the result has its childs.")
+            return None
 
-        # Find the subtree in the left subtree of the tree.
+        # Discover the subtree in the left subtree of the tree.
         result = discover(node, tree.left_subtree)
         if result is not None:
             return result
 
-        # Find the result in the right subtree of the tree.
+        # Discover the subtree in the right subtree of the tree.
         result = discover(node, tree.right_subtree)
         if result is not None:
             return result
