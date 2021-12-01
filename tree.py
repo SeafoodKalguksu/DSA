@@ -16,7 +16,7 @@ class Tree:
         if subtree.left_subtree is not None or subtree.right_subtree is not None:
             return None
 
-        # 2. Make them(left and right nodes) subtree.
+        # 2. Make left and right nodes subtrees and connect.
         subtree.left_subtree = Tree(left_node, None, None)
         subtree.right_subtree = Tree(right_node, None, None)
 
@@ -25,31 +25,30 @@ class Tree:
         if tree.root_node == node:
             return tree
 
-        subtree = None
+        result: Tree = None
+
+        # Discover the subtree in the tree.
+        def discover(node, tree) -> Tree:
+            if tree is not None:
+                result = tree.find_subtree(node, tree)
+
+                if result is not None:
+                    # 'result' does not have its any childs.
+                    if result.left_subtree is None and result.right_subtree is None:
+                        return result
+                    else:
+                        print("found the result with the node but the result has its childs.")
+                        return None
 
         # Find the subtree in the left subtree of the tree.
-        if tree.left_subtree is not None:
-            subtree = tree.left_subtree.find_subtree(node, tree.left_subtree)
+        result = discover(node, tree.left_subtree)
+        if result is not None:
+            return result
 
-            if subtree is not None:
-                # 'subtree' does not have its any childs.
-                if subtree.left_subtree is None and subtree.right_subtree is None:
-                    return subtree
-                else:
-                    print("found the subtree with the node but the subtree has its childs.")
-                    return None
-
-        # Find the subtree in the right subtree of the tree.
-        if tree.right_subtree is not None:
-            subtree = tree.right_subtree.find_subtree(node, tree.right_subtree)
-
-            if subtree is not None:
-                # 'subtree' does not have its any childs.
-                if subtree.left_subtree is None and subtree.right_subtree is None:
-                    return subtree
-                else:
-                    print("found the subtree with the node but the subtree has its childs.")
-                    return None
+        # Find the result in the right subtree of the tree.
+        result = discover(node, tree.right_subtree)
+        if result is not None:
+            return result
 
         return None
 
@@ -104,7 +103,7 @@ def main() -> None:
     number: int = int(input())
 
     # Making a root and its subtrees.
-    root_info = [int(node) for node in input().split()]
+    root_info: List[int] = [int(node) for node in input().split()]
     root_node, left_node, right_node = root_info
 
     # Making a tree by using the root info.
