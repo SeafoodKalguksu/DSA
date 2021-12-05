@@ -5,9 +5,10 @@
 from typing import Any, List
 import time
 
+
 # Using a list to implement a priority queue.
 class PriorityQueue:
-    def __init__(self) -> None:
+    def __init__(self):
         # Making an empty queue.
         self.data: List[Any] = []
 
@@ -15,11 +16,11 @@ class PriorityQueue:
         return True if len(self.data) == 0 else False
 
     def push(self, item: Any) -> None:
-        self.data.append(item) # O(1)
+        self.data.append(item)  # O(1)
 
     def pop(self) -> Any:
-        top_priority: Any = max(self.data) # O(n)
-        self.data.remove(top_priority) # O(n)
+        top_priority: Any = max(self.data)  # O(n)
+        self.data.remove(top_priority)  # O(n)
 
         return top_priority
 
@@ -27,19 +28,18 @@ class PriorityQueue:
 # Using a heap to implement a priority queue.
 # Heap is a complete binary tree which has the operations of add(log n) and
 # remove(log n).
-# root node must starts from self.data[1] because of finding left and right
+# The root node must starts from self.data[1] because of finding left and right
 # children by the index calculation.
-# The smallest index is the highest priority.
-
-#             1                 <- root == self.data[index]
-#     2               3         <- left == self.data[index * 2]
-# 4       5       6       7     <- right  == self.data[index * 2 + 1]
-# [0|1|2|3|4|5|6|7]
+#        1          <- root: self.data[index]
+#    3      2       <- left: self.data[index*2], right: self.data[index*2+1]
+# 7    6  5   4
+# [0|1|3|2|7|6|5|4]
 class PriorityQueueByUsingHeap:
-    def __init__(self) -> None:
-        self.data: List[Any] = [None] # starts from self.data[1]
+    def __init__(self):
+        self.data: List[Any] = [None]
 
     def is_empty(self) -> bool:
+        # starts from self.data[1]
         return True if len(self.data) == 1 else False
 
     def push(self, item: Any) -> None:
@@ -47,40 +47,89 @@ class PriorityQueueByUsingHeap:
         self.data.append(item)
 
         # 2. Get the index of the last item of the tree.
-        current_index: int = len(self.data) - 1
-        parent_index: int = current_index // 2
+        cur_idx: int = len(self.data) - 1
+        parent_idx: int = cur_idx // 2
 
         # 3. Swap the item for its parent item if the priority of the item is
         #    higher than its parent's priority.
 
         # Stop the loop if the current index is equal to the root of the heap.
-        while parent_index is not 0:
-            if self.data[current_index] < self.data[parent_index]:
-                self.data[current_index], self.data[parent_index] = self.data[parent_index], self.data[current_index]
-                current_index = parent_index
-                parent_index = current_index // 2
+        while parent_idx != 0:
+            if self.data[cur_idx] < self.data[parent_idx]:
+                self.data[cur_idx], self.data[parent_idx] = self.data[parent_idx], self.data[cur_idx]
+                cur_idx = parent_idx
+                parent_idx = cur_idx // 2
             else:
                 break
 
-
     def pop(self) -> Any:
-        pass
+        # 0. Check if the list is empty.
+        if len(self.data) == 1:
+            return None
+
+        # 1. Assign the item of the root node to variable 'return value'.
+        top_priority: Any = self.data[1]
+
+        # 2. Assign the item of the last node to the root node's item.
+        self.data[1] = self.data[-1]
+
+        # 3. Remove the last item.
+        self.data.pop()
+
+        # 4. Compare the item with its childrens' values
+        cur_idx: int = 1  # starts from the root
+        length: int = len(self.data)
+        higher_priority_idx: int = -1
+
+        while True:
+            # 4.1.  No child
+            if length - 1 < cur_idx * 2:
+                break
+            # 4.2.  Only left child
+            elif length - 1 < cur_idx * 2 + 1:
+                higher_priority_idx = cur_idx * 2
+            # 4.3.  Both children
+            else:
+                # 4.3.1.  Compare children
+                if self.data[cur_idx * 2] < self.data[cur_idx * 2 + 1]:
+                    higher_priority_idx = cur_idx * 2
+                else:
+                    higher_priority_idx = cur_idx * 2 + 1
+
+            # 4.4.  Compare the current item with the higher child's item
+            if self.data[cur_idx] > self.data[higher_priority_idx]:
+                self.data[cur_idx], self.data[higher_priority_idx] = self.data[higher_priority_idx], self.data[cur_idx]
+                cur_idx = higher_priority_idx
+            else:
+                break
+
+        return top_priority
 
 
-def main():
-    pq = PriorityQueue()
-    inputs: List[int] = [1, 2, 5, 3, 9, 4, 17, 8, 7, 6, 23, 77, 45, 10, 31, 87]
-
-    while len(inputs) != 0:
-        pq.push(inputs.pop())
-
+def check_performance(priority_queue) -> None:
     start_time: float = time.time()
-    while pq.is_empty() is False:
-        print(f"The current top priority of Priority Queue is == {pq.pop()}")
+    while priority_queue.is_empty() is False:
+        print(
+            f"pop(): {priority_queue.pop()}")
 
     time.sleep(1)
     end_time: float = time.time()
-    print("WorkingTime: {} sec".format(end_time - start_time))
+    print(f"WorkingTime: {end_time - start_time} sec")
+
+
+def main():
+    inputs: List[int] = [1, 2, 5, 3, 9, 4, 17, 8, 7, 6, 23, 77, 45, 10, 31, 87]
+    pq1 = PriorityQueue()
+    pq2 = PriorityQueueByUsingHeap()
+    item: int = -1
+
+    while len(inputs) != 0:
+        item = inputs.pop()
+        pq1.push(item)
+        pq2.push(item)
+
+    check_performance(pq1)
+    check_performance(pq2)
 
 
 if __name__ == "__main__":
