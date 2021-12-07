@@ -3,10 +3,12 @@
 # pylint: disable=missing-function-docstring
 
 from typing import Any, List
+import heapq
 import time
 
-
 # Using a list to implement a priority queue.
+
+
 class PriorityQueue:
     def __init__(self):
         # Making an empty queue.
@@ -108,9 +110,12 @@ class PriorityQueueByUsingHeap:
 
 def check_performance(priority_queue) -> None:
     start_time: float = time.time()
-    while priority_queue.is_empty() is False:
-        print(
-            f"pop(): {priority_queue.pop()}")
+
+    if isinstance(priority_queue, List):
+        print(f"pop(): {heapq.heappop(priority_queue)}")
+    else:
+        while priority_queue.is_empty() is False:
+            print(f"pop(): {priority_queue.pop()}")
 
     time.sleep(1)
     end_time: float = time.time()
@@ -121,15 +126,18 @@ def main():
     inputs: List[int] = [1, 2, 5, 3, 9, 4, 17, 8, 7, 6, 23, 77, 45, 10, 31, 87]
     pq1 = PriorityQueue()
     pq2 = PriorityQueueByUsingHeap()
+    pq3 = []
     item: int = -1
 
     while len(inputs) != 0:
         item = inputs.pop()
         pq1.push(item)
         pq2.push(item)
+        heapq.heappush(pq3, item)
 
     check_performance(pq1)
     check_performance(pq2)
+    check_performance(pq3)
 
 
 if __name__ == "__main__":
