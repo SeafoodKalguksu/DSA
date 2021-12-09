@@ -8,7 +8,8 @@ The program return NO if the parentheses are like ‘
 # pylint: disable=missing-module-docstring
 # pylint: disable=missing-class-docstring
 
-from stack import Stack
+from stack_example import MyStack
+
 
 def check_paren(parentheses: str):
     '''
@@ -33,22 +34,25 @@ def check_paren(parentheses: str):
 
     return "No"
 
+
 def check_paren_by_using_stack(parentheses: str) -> bool:
     '''
     # 𝐎(n)
     # parentheses = "((()())())"
     '''
     length = len(parentheses)
-    my_stack = Stack(length)
+    my_stack = MyStack(length)
 
-    for i in range(length - 1):
+    for i in range(length):
         if parentheses[i] == '(':
             my_stack.push('(')
+            print(f"{i}: push")
         else:
+            print(f"{i}: pop")
             if my_stack.pop() is None:
                 return "No"
 
-    return "Yes" if my_stack.empty() else "No"
+    return "Yes" if my_stack.is_empty() else "No"
 
 
 def main():
@@ -57,10 +61,9 @@ def main():
     ((())()))) -> No
     (())((())) -> Yes
     '''
-    parentheses = input()
-    print(check_paren(str(parentheses)))
-    print(check_paren_by_using_stack(str(parentheses)))
-
+    parentheses: str = str(input())
+    print(check_paren(parentheses))
+    print(check_paren_by_using_stack(parentheses))
 
 
 if __name__ == "__main__":

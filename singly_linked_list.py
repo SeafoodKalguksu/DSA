@@ -4,7 +4,8 @@
 
 from typing import Any
 
-class Node: # Node for Singly Linked List
+
+class Node:  # Node for Singly Linked List
     def __init__(self) -> None:
         self.item: Any = None
         self.next_node: Node = None
@@ -35,7 +36,7 @@ class SinglyLinkedList:
 
     def find_prev_node(self, cur_node: Node) -> Node:
         if cur_node is None:
-            print("can't remove because the cur_node is None!")
+            print("Can't find the prev node because the cur node is None.")
             return None
 
         prev_node = None
@@ -49,7 +50,8 @@ class SinglyLinkedList:
 
     def find_by_pos(self, pos: int) -> Node:
         if pos < 0 or pos >= self.__size:
-            print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
+            print(
+                f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
 
         node = self.__head
@@ -111,11 +113,11 @@ class SinglyLinkedList:
             print("can't remove because the node is None!")
 
     def __remove_node(self, node: Node, prev_node: Node) -> None:
-        if self.__head == node: # Found the item in the first node of the list.
+        if self.__head == node:  # Found the item in the first node of the list.
             self.__head = self.__head.next_node
             node.item = None
             node.next_node = None
-        elif node is self.__tail: # Found the item in the last node of the list.
+        elif node is self.__tail:  # Found the item in the last node of the list.
             prev_node.next_node = None
             self.__tail.item = None
             self.__tail = prev_node
@@ -126,18 +128,17 @@ class SinglyLinkedList:
 
         self.__size -= 1
 
-    def pop(self, pos:int = None) -> Any:
+    def pop(self, pos: int = None) -> Any:
         if pos is None:
             pos = self.get_size() - 1
 
         if pos < 0 or pos >= self.__size:
-            print(f"can't find a node because the pos is invalid in the list: pos = {pos}")
+            print(
+                f"can't find a node because the pos is invalid in the list: pos = {pos}")
             return None
 
         node = self.find_by_pos(pos)
-        prev_node = self.find_by_pos(pos -1)
-        if prev_node is None:
-            print("prev_node is None and only one node exists in the list!")
+        prev_node = self.find_prev_node(node)
 
         item = node.item
         self.__remove_node(node, prev_node)
