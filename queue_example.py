@@ -5,6 +5,7 @@
 from typing import Any
 from singly_linked_list import SinglyLinkedList
 
+
 class Queue:
     def __init__(self, max_size) -> None:
         self.__sll = SinglyLinkedList()
