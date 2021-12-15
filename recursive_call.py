@@ -38,7 +38,7 @@ def reverse_string(string: str) -> str:
     if len(string) == 1:
         return string
 
-    return string[-1] + reverse_string(str[1:-1]) + string[0]
+    return string[-1] + reverse_string(string[1:-1]) + string[0]
 
 
 # In mathematics, the Euclidean algorithm, or Euclid's algorithm, is
