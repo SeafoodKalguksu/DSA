@@ -12,11 +12,18 @@ def get_factorial(number: int) -> int:
 def get_power(m: int, n: int) -> int:
     if n == 0:
         return 1
-    elif n % 2 == 0:
-        temp = get_power(m, n // 2)
-        return temp * temp
+    elif n < 0:
+        if n % 2 == 0:
+            temp = get_power(m, n // 2)
+            return temp * temp
+        else:
+            return (1 / m) * get_power(m, n+1)
     else:
-        return m * get_power(m, n-1)
+        if n % 2 == 0:
+            temp = get_power(m, n // 2)
+            return temp * temp
+        else:
+            return m * get_power(m, n-1)
 
 
 # Convert a decimal number to a binary number.
@@ -54,6 +61,7 @@ def get_gcd(first, second):
 
 def main():
     print(get_gcd(30, 12))
+    print(get_power(8, -2))
 
 
 if __name__ == "__main__":
