@@ -45,14 +45,15 @@ def insert_number(my_input: List[List[int]], pipe: Pipe) -> None:
             pipe.add_left(item[1][0])
             print(f'add_left, item[1][0] = {item[1][0]}')
 
+
 def using_list() -> None:
-    counter: int = int(input())
+    counter: int = int(input("Type the number of balls to add: "))
     my_input: List = []
 
-    for _ in range(counter) :
-        my_input.append([int(element) for element in input().split()])
+    for _ in range(counter):
+        my_input.append([int(element) for element in input(
+            "Type the number of the ball and direction to add: ").split()])
 
-    # print(*insert_number(my_input))
     pipe = Pipe()
     insert_number(my_input, pipe)
     print(f'numbers = {pipe.data}')
