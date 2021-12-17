@@ -5,20 +5,20 @@
 from typing import List
 
 
-class Fibonacci():
-    '''
+class Fibonacci:
+    """
     Fibonacci number
     F₀ = 0, F₁= 1, F₂ = F₀ + F₁, ... , F𝚗₊₂ = F𝚗 + F𝚗₊₁
-    '''
+    """
 
     def __init__(self) -> None:
         pass
 
     def get_number(self, nth: int) -> int:
-        '''
+        """
         Return Nth fibonacci number
         nth: 5 -> f₅
-        '''
+        """
 
         def using_loop(nth: int) -> int:
             if nth == 0 or nth == 1:
@@ -36,11 +36,13 @@ class Fibonacci():
             return fibo_2
 
         def using_recursion(nth: int) -> int:
-            return nth if nth < 2 else using_recursion(nth - 2) + using_recursion(nth - 1)
+            return (
+                nth if nth < 2 else using_recursion(nth - 2) + using_recursion(nth - 1)
+            )
 
         try:
             if nth < 0:
-                raise Exception('f𝚗: nth must be greater than -1.')
+                raise Exception("f𝚗: nth must be greater than -1.")
         except Exception as error:
             print(error)
             return None
@@ -49,10 +51,10 @@ class Fibonacci():
             # return using_recursion(nth)
 
     def get_numbers(self, nth: int) -> List[int]:
-        '''
+        """
         Return a list which has fibonacci numbers from f0 to fn
         nth: 5 -> f₅
-        '''
+        """
         fibonacci_numbers: List[int] = []
 
         def using_loop(nth: int) -> List[int]:
@@ -78,7 +80,7 @@ class Fibonacci():
 
         try:
             if nth < 0:
-                raise Exception('f𝚗: nth must be greater than -1.')
+                raise Exception("f𝚗: nth must be greater than -1.")
         except Exception as error:
             print(error)
             return None
