@@ -3,7 +3,6 @@
 # pylint: disable=missing-function-docstring
 
 
-from fibonacci import USING_RECURRSION
 from recursive_call import get_power
 
 USING_LOOP = 0
