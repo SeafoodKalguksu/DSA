@@ -2,7 +2,12 @@
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 
-from typing import List
+import collections
+from typing import DefaultDict, List
+
+USING_LOOP = 0
+USING_RECURRSION = 1
+USING_MEMOIZATION = 2
 
 
 class Fibonacci:
@@ -12,9 +17,10 @@ class Fibonacci:
     """
 
     def __init__(self) -> None:
-        pass
+        # For memoization
+        self.memoization: DefaultDict[int, int] = collections.defaultdict(int)
 
-    def get_number(self, nth: int) -> int:
+    def get_number(self, nth: int, select: int = USING_MEMOIZATION) -> int:
         """
         Return Nth fibonacci number
         nth: 5 -> f₅
@@ -40,6 +46,19 @@ class Fibonacci:
                 nth if nth < 2 else using_recursion(nth - 2) + using_recursion(nth - 1)
             )
 
+        def using_memoization(nth: int) -> int:
+            if nth in self.memoization:
+                return self.memoization[nth]
+
+            if nth < 2:
+                self.memoization[nth] = nth
+            else:
+                self.memoization[nth] = using_memoization(nth - 2) + using_memoization(
+                    nth - 1
+                )
+
+            return self.memoization[nth]
+
         try:
             if nth < 0:
                 raise Exception("f𝚗: nth must be greater than -1.")
@@ -47,10 +66,14 @@ class Fibonacci:
             print(error)
             return None
         else:
-            return using_loop(nth)
-            # return using_recursion(nth)
+            if select == USING_LOOP:
+                return using_loop(nth)
+            elif select == USING_RECURRSION:
+                return using_recursion(nth)
+            else:
+                return using_memoization(nth)  # default
 
-    def get_numbers(self, nth: int) -> List[int]:
+    def get_numbers(self, nth: int, select: int = USING_MEMOIZATION) -> List[int]:
         """
         Return a list which has fibonacci numbers from f0 to fn
         nth: 5 -> f₅
@@ -78,6 +101,15 @@ class Fibonacci:
 
             return fibonacci_numbers
 
+        def using_memoization(nth: int) -> List[int]:
+            self.__init__()
+            self.get_number(nth)
+
+            for _, value in self.memoization.items():
+                fibonacci_numbers.append(value)
+
+            return fibonacci_numbers
+
         try:
             if nth < 0:
                 raise Exception("f𝚗: nth must be greater than -1.")
@@ -85,14 +117,18 @@ class Fibonacci:
             print(error)
             return None
         else:
-            return using_loop(nth)
-            # return using_recursion(nth)
+            if select == USING_LOOP:
+                return using_loop(nth)
+            elif select == USING_RECURRSION:
+                return using_recursion(nth)
+            else:
+                return using_memoization(nth)  # default
 
 
 def main():
     fibonacci = Fibonacci()
-    print(fibonacci.get_number(10))
-    print(fibonacci.get_numbers(10))
+    print(fibonacci.get_number(10, USING_LOOP))
+    print(fibonacci.get_numbers(10, USING_MEMOIZATION))
 
 
 if __name__ == "__main__":
