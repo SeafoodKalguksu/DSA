@@ -18,10 +18,18 @@ class PowerSet:
     {1, 2}, {1, 3}, {2, 3}, {1, 2, 3} }
     """
 
-    def __init__(self, number) -> None:
-        self.data: List[List[int]] = self.power_set(number)
+    def __init__(self, number=1) -> None:
+        try:
+            if number < 1:
+                raise Exception("number must be greater than 0.")
+            else:
+                self.data: List[List[int]] = self.power_set(number)
+        except Exception as e:
+            print(e)
+        # else:
+        #     self.data: List[List[int]] = self.power_set(number)
 
-    def power_set(self, number: int = 0) -> List[List[int]]:
+    def power_set(self, number: int = 1) -> List[List[int]]:
         """
         Set A has integer elements. Elements in power set of the A should be
         added into list by ascending. Return the list.
