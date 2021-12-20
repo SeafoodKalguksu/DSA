@@ -18,8 +18,8 @@ class PowerSet:
     {1, 2}, {1, 3}, {2, 3}, {1, 2, 3} }
     """
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, number) -> None:
+        self.data: List[List[int]] = self.power_set(number)
 
     def power_set(self, number: int = 0) -> List[List[int]]:
         """
@@ -28,60 +28,61 @@ class PowerSet:
         ex) number = 3
             [ [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3] ]
         """
+
+        def get_power_set(number: int = 1, kth: int = 1) -> List[List[int]]:
+            """
+            The first element of the each subset in the power set should start with
+            element k.
+            ex) [1, 2, 3]
+                get_power_set(3, 1) == [[1], [1, 2], [1, 2, 3], [1, 3]]
+                get_power_set(3, 2) == [[2], [2, 3]]
+                get_power_set(3, 3) == [[3]]
+                get_power_set(3, 2) + get_power_set(3, 3) == [[2], [2, 3], [3]]
+
+                1
+                1 2
+                1 2 3
+                1 3
+                2
+                2 3
+                3
+            """
+            try:
+                if number < 1 or kth > number or kth < 1:
+                    raise Exception("Invalid number = {number} or kth = {kth}")
+            except Exception as e:
+                print(e)
+                return None
+            else:
+                if kth == number:
+                    return [[kth]]
+                else:
+                    # get_power_set(number, kth) == [[kth], [kth, kth+1, ...], [kth, kth+2, ...], [kth, kth+3, ...], ...]
+                    # [[kth]] +
+                    # [[kth]] + get_power_set(number, kth + 1),
+                    # [[kth]] + get_power_set(number, kth + 2),
+                    # [[kth]] + get_power_set(number, kth + 3), ...
+                    ret_value: List[List[int]] = []
+
+                    for index in range(kth + 1, number + 1):
+                        ret_value += get_power_set(number, index)
+
+                    for index in range(len(ret_value)):
+                        ret_value[index] = [kth] + ret_value[index]
+
+                    return [[kth]] + ret_value
+
         result: List[List[int]] = []
 
         for kth in range(1, number + 1):
-            result += self.get_power_set(number, kth)
+            result += get_power_set(number, kth)
 
         return result
 
-    def get_power_set(self, number: int = 1, kth: int = 1) -> List[List[int]]:
-        """
-        The first element of the each subset in the power set should start with
-        element k.
-        ex) [1, 2, 3]
-            get_power_set(3, 1) == [[1], [1, 2], [1, 2, 3], [1, 3]]
-            get_power_set(3, 2) == [[2], [2, 3]]
-            get_power_set(3, 3) == [[3]]
-            get_power_set(3, 2) + get_power_set(3, 3) == [[2], [2, 3], [3]]
-
-            1
-            1 2
-            1 2 3
-            1 3
-            2
-            2 3
-            3
-        """
-        try:
-            if number < 1 or kth > number or kth < 1:
-                raise Exception("Invalid number = {number} or kth = {kth}")
-        except Exception as e:
-            print(e)
-            return None
-        else:
-            if kth == number:
-                return [[kth]]
-            else:
-                # get_power_set(number, kth) == [[kth], [kth, kth+1, ...], [kth, kth+2, ...], [kth, kth+3, ...], ...]
-                # [[kth]] +
-                # [[kth]] + get_power_set(number, kth + 1),
-                # [[kth]] + get_power_set(number, kth + 2),
-                # [[kth]] + get_power_set(number, kth + 3), ...
-                ret_value: List[List[int]] = []
-
-                for index in range(kth + 1, number + 1):
-                    ret_value += self.get_power_set(number, index)
-
-                for index in range(len(ret_value)):
-                    ret_value[index] = [kth] + ret_value[index]
-
-                return [[kth]] + ret_value
-
 
 def main():
-    power_set = PowerSet()
-    print(power_set.power_set(4))
+    power_set = PowerSet(4)
+    print(power_set.data)
 
 
 if __name__ == "__main__":
