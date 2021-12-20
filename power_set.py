@@ -54,25 +54,29 @@ class PowerSet:
             3
         """
         try:
-            if number < 1 or kth < 1 or kth > number:
+            if number < 1 or kth > number or kth < 1:
                 raise Exception("Invalid number = {number} or kth = {kth}")
-            elif number == kth:
-                return [[number]]  # get_power_set(3, 3) == [[3]]
-            else:
-                # get_power_set(3, 1) == [[1], [1, 2], [1, 2, 3], [1, 3]]
-                result: List[List[int]] = []
-
-                for index in range(kth + 1, number + 1):
-                    result += self.get_power_set(number, index)
-
-                for index in range(len(result)):
-                    result[index] = [kth] + result[index]  # [[1, 2], [1, 2, 3], [1, 3]]
-
-                return [[kth]] + result  # [[1], [1, 2], [1, 2, 3], [1, 3]]
-
         except Exception as e:
             print(e)
             return None
+        else:
+            if kth == number:
+                return [[kth]]
+            else:
+                # get_power_set(number, kth) == [[kth], [kth, kth+1, ...], [kth, kth+2, ...], [kth, kth+3, ...], ...]
+                # [[kth]] +
+                # [[kth]] + get_power_set(number, kth + 1),
+                # [[kth]] + get_power_set(number, kth + 2),
+                # [[kth]] + get_power_set(number, kth + 3), ...
+                ret_value: List[List[int]] = []
+
+                for index in range(kth + 1, number + 1):
+                    ret_value += self.get_power_set(number, index)
+
+                for index in range(len(ret_value)):
+                    ret_value[index] = [kth] + ret_value[index]
+
+                return [[kth]] + ret_value
 
 
 def main():
