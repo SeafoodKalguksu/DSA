@@ -33,30 +33,29 @@ def get_groups_with_diff(numbers: List[int]) -> List[List[List]]:
     def sum_of_group(group: List[int]) -> int:
         ret_value: int = 0
 
-        for kth in group:
-            # "kth" starts from 1 but "index" will be started from 0
-            ret_value += numbers[kth - 1]
+        for index in group:
+            ret_value += numbers[index]
 
         return ret_value
 
     def get_the_other_group(group: List[int]) -> List[int]:
         the_other_group: List[int] = []
 
-        for kth in range(1, len(numbers) + 1):
-            the_other_group.append(kth)
+        for index, _ in enumerate(numbers):
+            the_other_group.append(index)
 
-        for kth in group:
-            the_other_group.remove(kth)
+        for index in group:
+            the_other_group.remove(index)
 
         return the_other_group
 
-    def from_kth_to_values(group_kth: List[int]) -> List[int]:
-        group_values: List[int] = []
+    def from_index_to_values(group: List[int]) -> List[int]:
+        values: List[int] = []
 
-        for kth in group_kth:
-            group_values.append(numbers[kth - 1])
+        for index in group:
+            values.append(numbers[index])
 
-        return group_values
+        return values
 
     try:
         power_set = PowerSet(len(numbers))
@@ -72,18 +71,19 @@ def get_groups_with_diff(numbers: List[int]) -> List[List[List]]:
         ] = collections.defaultdict(int)
 
         # 𝐎(𝚗*2ⁿ)
-        for group_a_kth in combinations:  # 𝐎(2ⁿ)
+        for group_a in combinations:  # 𝐎(2ⁿ)
             # ex) numbers = [-1, 2, 3, -3, 6]
-            # elements in the group are equal to (indices of numbers - 1)
-            # group_a_index = [1, 3] means that numbers = [-1, 3]
+            # elements in combinations are equal to the indices of the power set
+            # group_a = [1, 3] means that numbers = [2, -3]: the elements of
+            # the group are equal to the indices of the numbers
 
-            sum_of_group_a: int = sum_of_group(group_a_kth)  # 𝐎(n)
+            sum_of_group_a: int = sum_of_group(group_a)  # 𝐎(n)
             sum_of_group_b: int = sum_of_numbers - sum_of_group_a
-            group_b_kth: List[int] = get_the_other_group(group_a_kth)
+            group_b: List[int] = get_the_other_group(group_a)
 
             diff = abs(sum_of_group_a - sum_of_group_b)
-            group_a_values: List[int] = from_kth_to_values(group_a_kth)
-            group_b_values: List[int] = from_kth_to_values(group_b_kth)
+            group_a_values: List[int] = from_index_to_values(group_a)
+            group_b_values: List[int] = from_index_to_values(group_b)
 
             if groups_with_diff[diff] != 0:
                 groups_with_diff[diff].append([group_a_values, group_b_values])
