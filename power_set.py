@@ -18,7 +18,7 @@ class PowerSet:
     {1, 2}, {1, 3}, {2, 3}, {1, 2, 3} }
     """
 
-    def __init__(self, number=1) -> None:
+    def __init__(self, number: int = 1) -> None:
         try:
             if number < 1:
                 raise Exception("number must be greater than 0.")
@@ -37,15 +37,15 @@ class PowerSet:
             [ [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3] ]
         """
 
-        def get_power_set(number: int = 1, kth: int = 1) -> List[List[int]]:
+        def get_power_set(number: int = 1, index: int = 0) -> List[List[int]]:
             """
-            The first element of the each subset in the power set should start with
-            element k.
+            The first element of the each subset in the power set should start
+            with numbers[index].
             ex) [1, 2, 3]
-                get_power_set(3, 1) == [[1], [1, 2], [1, 2, 3], [1, 3]]
-                get_power_set(3, 2) == [[2], [2, 3]]
-                get_power_set(3, 3) == [[3]]
-                get_power_set(3, 2) + get_power_set(3, 3) == [[2], [2, 3], [3]]
+                get_power_set(3, 0) == [[1], [1, 2], [1, 2, 3], [1, 3]]
+                get_power_set(3, 1) == [[2], [2, 3]]
+                get_power_set(3, 2) == [[3]]
+                get_power_set(3, 1) + get_power_set(3, 2) == [[2], [2, 3], [3]]
 
                 1
                 1 2
@@ -56,34 +56,34 @@ class PowerSet:
                 3
             """
             try:
-                if number < 1 or kth > number or kth < 1:
-                    raise Exception("Invalid number = {number} or kth = {kth}")
+                if number < 1 or index + 1 > number or index < 0:
+                    raise Exception("Invalid number = {number} or index = {index}")
             except Exception as e:
                 print(e)
                 return None
             else:
-                if kth == number:
-                    return [[kth]]
-                else:
-                    # get_power_set(number, kth) == [[kth], [kth, kth+1, ...], [kth, kth+2, ...], [kth, kth+3, ...], ...]
-                    # [[kth]] +
-                    # [[kth]] + get_power_set(number, kth + 1),
-                    # [[kth]] + get_power_set(number, kth + 2),
-                    # [[kth]] + get_power_set(number, kth + 3), ...
-                    ret_value: List[List[int]] = []
+                if (index + 1) == number:
+                    return [[index]]
 
-                    for index in range(kth + 1, number + 1):
-                        ret_value += get_power_set(number, index)
+                # get_power_set(number, index) == [[index], [index, index+1, ...], [index, index+2, ...], [index, index+3, ...], ...]
+                # [[index]] +
+                # [[index]] + get_power_set(number, index),
+                # [[index]] + get_power_set(number, index + 1),
+                # [[index]] + get_power_set(number, index + 2), ...
+                ret_value: List[List[int]] = []
 
-                    for index in range(len(ret_value)):
-                        ret_value[index] = [kth] + ret_value[index]
+                for idx in range(index + 1, number):
+                    ret_value += get_power_set(number, idx)
 
-                    return [[kth]] + ret_value
+                for idx, _ in enumerate(ret_value):
+                    ret_value[idx] = [index] + ret_value[idx]
+
+                return [[index]] + ret_value
 
         result: List[List[int]] = []
 
-        for kth in range(1, number + 1):
-            result += get_power_set(number, kth)
+        for idx in range(0, number):
+            result += get_power_set(number, idx)
 
         return result
 
