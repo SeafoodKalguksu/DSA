@@ -4,6 +4,10 @@
 
 
 def is_prime(number: int) -> bool:
+    """
+    No need to iterate beyond half of number // 2 + 1
+    The divisiors of number are 1, [..., half of number,] number
+    """
     for i in range(2, number // 2 + 1):
         if not number % i:
             return False
@@ -19,12 +23,12 @@ def count_prime_numbers(max: int) -> int:
         if is_prime(number):
             count += 1
 
-    print(f"count: {count}")
+    return count
 
 
 def main():
     max = int(input("type your maximum number: "))
-    count_prime_numbers(max)
+    print(f"count: {count_prime_numbers(max)}")
 
 
 if __name__ == "__main__":
