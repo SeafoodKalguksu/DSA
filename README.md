@@ -1,3 +1,3 @@
 # DSA
-Data Structures and Algorithms in Python
+Data Structures and Algorithms in Python 3
 + LeetCode
