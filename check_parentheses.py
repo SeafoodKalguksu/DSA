@@ -1,5 +1,5 @@
 '''
-if the parentheses are like ‘(())’, the program
+if the parentheses are like '(())' or '(())((()))', the program
 returns YES.
 The program return NO if the parentheses are like ‘
 (()))’ or ‘(()()(’.
@@ -11,7 +11,7 @@ The program return NO if the parentheses are like ‘
 from stack_example import MyStack
 
 
-def check_paren(parentheses: str):
+def check_paren_by_using_recursive_call(parentheses: str):
     '''
     0. return YES if the length of the parentheses is 0 or "()".
     1. find an adjacent rounded brakets like '()' in the parentheses.
@@ -30,9 +30,9 @@ def check_paren(parentheses: str):
             if parentheses[i] == '(' and parentheses[i+1] == ')':
                 # remove parentheses[i] and parentheses[i+1]
                 new_parentheses: str = parentheses[:i] + parentheses[i+2:]
-                return check_paren(new_parentheses)
+                return check_paren_by_using_recursive_call(new_parentheses)
 
-    return "No"
+        return "No"
 
 
 def check_paren_by_using_stack(parentheses: str) -> bool:
@@ -62,7 +62,7 @@ def main():
     (())((())) -> Yes
     '''
     parentheses: str = str(input())
-    print(check_paren(parentheses))
+    print(check_paren_by_using_recursive_call(parentheses))
     print(check_paren_by_using_stack(parentheses))
 
 
