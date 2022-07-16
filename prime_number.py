@@ -16,10 +16,10 @@ def is_prime(number: int) -> bool:
     return True
 
 
-def count_prime_numbers(max: int) -> int:
+def count_prime_numbers(max_number: int) -> int:
     count: int = 0
 
-    for number in range(1, max + 1):
+    for number in range(1, max_number + 1):
         if is_prime(number):
             count += 1
 
@@ -27,8 +27,8 @@ def count_prime_numbers(max: int) -> int:
 
 
 def main():
-    max = int(input("type your maximum number: "))
-    print(f"count: {count_prime_numbers(max)}")
+    max_number = int(input("type your maximum number: "))
+    print(f"count: {count_prime_numbers(max_number)}")
 
 
 if __name__ == "__main__":
