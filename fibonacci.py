@@ -42,6 +42,15 @@ class Fibonacci:
             return fibo_2
 
         def using_recursion(nth: int) -> int:
+            """get nth fibonacci number by using recursive calls.
+            Args:
+                nth (int):
+
+            Returns:
+                int: nth fibonacci number
+            """
+
+            # Time Complexity 𝐎(2ⁿ)
             return (
                 nth if nth < 2 else using_recursion(nth - 2) + using_recursion(nth - 1)
             )

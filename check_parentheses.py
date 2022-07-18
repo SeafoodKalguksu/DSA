@@ -11,7 +11,7 @@ The program return NO if the parentheses are like ‘
 from stack_example import MyStack
 
 
-def check_paren_by_using_recursive_call(parentheses: str):
+def check_paren_by_using_recursive_call(parentheses: str) -> str:
     '''
     0. return YES if the length of the parentheses is 0 or "()".
     1. find an adjacent rounded brakets like '()' in the parentheses.
